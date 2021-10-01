@@ -1,2 +1,2 @@
 # reviewModel
-all code required to recreate Figures from the review.
+All code required to recreate figures.
