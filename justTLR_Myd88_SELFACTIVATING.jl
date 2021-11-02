@@ -61,6 +61,8 @@ function barallspeciesfinaln(phase2_sollist)
     subplotlist=[]
     yvaluelistoflists=[]
 	sims=["WT","L265P"]
+
+	# colorMap=Dict("WT"=>RGB(0/256,100/256,0/256),"L265P"=>RGB(200/256,191/256,230/256))
 	colorMap=Dict("WT"=>RGB(0,191/256,0),"L265P"=>RGB(128/256,0,128/256))
 	colours=[colorMap[i] for i in sims]
     for j = 1:25
@@ -69,16 +71,27 @@ function barallspeciesfinaln(phase2_sollist)
 	        local a=phase2_sollist[iter][end][j]
             push!(finalvalues,a)
         end
-		lb=minimum(finalvalues);ub=maximum(finalvalues)
-		ticks = round.(range(lb,ub,length = 4),digits=3)
-		bar(["WT","L265P"],finalvalues,colour=colours,title=specie_names[j],legend=:left,yticks=ticks)
+		ub=maximum(finalvalues)*1.2
+		lb=-0.2*ceil(ub,sigdigits=1)
+		ylimz=(lb,ceil(ub,sigdigits=1))
+		# ticks = round.(range(0,ub,length = 5),digits=1)
+		ticks = (range(lb,ceil(ub,sigdigits=1),length = 3), string.(round.(range(lb,ceil(ub,sigdigits=1),length = 3),sigdigits=2)))
+		ticks[2][end] = string(ceil(ub,sigdigits=1))
+		if maximum(ticks[1])<1e-6
+			lb=ceil(1e-10,sigdigits=1)
+			ticks=[-2e-11, 0, 1e-10],["-2e-11","0.0","1e-10"]
+			ylimz=(-2e-11,1e-10)
+			finalvalues[end-1]=1e-13
+			finalvalues[end]=1e-13
+			bar(["WT","L265P"],finalvalues,colour=colours,title=specie_names[j],legend=:left,yticks=ticks,ylims=ylimz,ytickfontsize=15)
+		else
+		bar(["WT","L265P"],finalvalues,colour=colours,title=specie_names[j],legend=:left#=,yticks=ticks=#,ylims=ylimz,ytickfontsize=15)
+		end
 		# bar([finalvalues,title=specie_names[j],legend=:left)
         push!(subplotlist,current()) #most recent graph appended
     end
     return subplotlist
 end
-testplots=barallspeciesfinaln(sollist)
-plot(testplots[1],testplots[2],testplots[3],testplots[4],testplots[5],testplots[6],testplots[7],testplots[8],testplots[9],testplots[10],testplots[11],testplots[12],testplots[13],testplots[14],testplots[15],testplots[16],testplots[17],testplots[18],testplots[19],testplots[20],testplots[21],testplots[22],testplots[23],testplots[24],testplots[25],size=[1250,1550],legend=:none)
 
 function justTLR_Myd88_SELFACTIVATING(dy,y,p,t)
 	LPS=y[1]
@@ -205,4 +218,4 @@ plot(subplotlist[1],subplotlist[2],subplotlist[3],subplotlist[4],subplotlist[5],
 current()
 
 testplots=barallspeciesfinaln(sollist)
-plot(testplots[1],testplots[2],testplots[3],testplots[4],testplots[5],testplots[6],testplots[7],testplots[8],testplots[9],testplots[10],testplots[11],testplots[12],testplots[13],testplots[14],testplots[15],testplots[16],testplots[17],testplots[18],testplots[19],testplots[20],testplots[21],testplots[22],testplots[23],testplots[24],testplots[25],size=[1250,1800],legend=:none,yticks=:auto)
+plot(testplots[1],testplots[2],testplots[3],testplots[4],testplots[5],testplots[6],testplots[7],testplots[8],testplots[9],testplots[10],testplots[11],testplots[12],testplots[13],testplots[14],testplots[15],testplots[16],testplots[17],testplots[18],testplots[19],testplots[20],testplots[21],testplots[22],testplots[23],testplots[24],testplots[25],size=[1250,1800]*0.6,legend=:none)
