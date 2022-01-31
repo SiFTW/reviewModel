@@ -119,10 +119,9 @@ function justTLR_Myd88_SELFACTIVATING(dy,y,p,t)
 	IRF3_A=y[23]
 	IRF3n=y[24]
 	IRF3n_A=y[25]
-	cbswitch=y[26]
+    	cbswitch=y[26]
 	#LPS
-	# dy[1]= -LPS*CD14*pmodfun(1) + CD14LPS*pmodfun(2)
-	dy[1]= -0
+	dy[1]= -LPS*CD14*pmodfun(1) + CD14LPS*pmodfun(2)
 	#CD14
 	dy[2]= -LPS*CD14*pmodfun(1) + CD14LPS*pmodfun(2) + pmodfun(3) - CD14*pmodfun(4)
 	#CD14LPS
@@ -138,9 +137,9 @@ function justTLR_Myd88_SELFACTIVATING(dy,y,p,t)
 	#TLR4LPSen
 	dy[8]= + CD14LPSen*TLR4en*pmodfun(7) - TLR4LPSen*pmodfun(8) + TLR4LPSpm*pmodfun(14) - TLR4LPSen*pmodfun(15) - TLR4LPSen*pmodfun(18) - TLR4LPSen*pmodfun(19)*cbswitch
 	#MYD88
-	dy[9]= -(pmodfun(20)*MYD88*(TLR4LPSpm^pmodfun(21)))/((TLR4LPSpm^pmodfun(21))+pmodfun(22)^pmodfun(21)) + MYD88_A*pmodfun(23) - MYD88*pmodfun(50)
+	dy[9]= -(pmodfun(20)*MYD88*(TLR4LPSpm^pmodfun(21)))/((TLR4LPSpm^pmodfun(21))+pmodfun(22)^pmodfun(21)) + MYD88_A*pmodfun(23)
 	#MYD88_A
-	dy[10]= + (pmodfun(20)*MYD88*(TLR4LPSpm^pmodfun(21)))/((TLR4LPSpm^pmodfun(21))+(pmodfun(22)^pmodfun(21))) - MYD88_A*pmodfun(23) + MYD88*pmodfun(50)
+	dy[10]= + (pmodfun(20)*MYD88*(TLR4LPSpm^pmodfun(21)))/((TLR4LPSpm^pmodfun(21))+pmodfun(22)^pmodfun(21)) - MYD88_A*pmodfun(23)
 	#TRIF
 	dy[11]= -TRIF*TLR4LPSen*pmodfun(24) + TRIF_A*pmodfun(25)
 	#TRIF_A
@@ -153,7 +152,7 @@ function justTLR_Myd88_SELFACTIVATING(dy,y,p,t)
 	dy[15]= -IKKK*TRAF6_A*pmodfun(29) + IKKK_A*pmodfun(30)
 	#IKKK_A
 	dy[16]= + IKKK*TRAF6_A*pmodfun(29) - IKKK_A*pmodfun(30)
-	#I6]
+	#IKK
 	dy[17]= -IKK*IKKK_A*pmodfun(31) + IKK_A*pmodfun(32) + IKKi*pmodfun(34)
 	#IKK_A
 	dy[18]= + IKK*IKKK_A*pmodfun(31) - IKK_A*pmodfun(32) - IKK_A*pmodfun(33)
@@ -166,13 +165,13 @@ function justTLR_Myd88_SELFACTIVATING(dy,y,p,t)
 	#IRF3
 	dy[22]= -IRF3*TBK1_A*pmodfun(37) + IRF3_A*pmodfun(38) - IRF3*pmodfun(41) + IRF3n*pmodfun(42) + pmodfun(45) - IRF3*pmodfun(46)
 	#IRF3_A
-	dy[23]= + IRF3*TBK1_A*pmodfun(37) - IRF3_A*pmodfun(38) + IRF3n_A*pmodfun(44) - IRF3_A*pmodfun(43) + IRF3n_A*pmodfun(44) - IRF3_A*pmodfun(47)
+	dy[23]= + IRF3*TBK1_A*pmodfun(37) - IRF3_A*pmodfun(38) + IRF3n_A*pmodfun(44) - IRF3_A*pmodfun(43) - IRF3_A*pmodfun(47)
 	#IRF3n
-	dy[24]= -IRF3n*pmodfun(39) + IRF3*pmodfun(41) - IRF3n*pmodfun(42) - IRF3n*pmodfun(49)
+	dy[24]= +IRF3n_A*pmodfun(39) + IRF3*pmodfun(41) - IRF3n*pmodfun(42) - IRF3n*pmodfun(49)
 	#IRF3n_A
-	dy[25]= + IRF3n*pmodfun(39) - IRF3n_A*pmodfun(44) + IRF3_A*pmodfun(43) - IRF3n_A*pmodfun(44) - IRF3n_A*pmodfun(48)
-	#cbswitch
-	dy[26]= - 0
+	dy[25]= - IRF3n_A*pmodfun(39) - IRF3n_A*pmodfun(44) + IRF3_A*pmodfun(43) - IRF3n_A*pmodfun(48)
+    	#cbswitch
+    	dy[26]= 0
 end
 function condition(cheng2015_justTLR_variableparams,t,integrator)
    t-0
