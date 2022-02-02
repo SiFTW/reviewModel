@@ -173,7 +173,7 @@ function justTLR_Myd88_SELFACTIVATING(dy,y,p,t)
     	#cbswitch
     	dy[26]= 0
 end
-function condition(cheng2015_justTLR_variableparams,t,integrator)
+function condition(justTLR_Myd88_SELFACTIVATING,t,integrator)
    t-0
 end
 function affect!(integrator)
