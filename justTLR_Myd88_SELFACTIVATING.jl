@@ -137,9 +137,9 @@ function justTLR_Myd88_SELFACTIVATING(dy,y,p,t)
 	#TLR4LPSen
 	dy[8]= + CD14LPSen*TLR4en*pmodfun(7) - TLR4LPSen*pmodfun(8) + TLR4LPSpm*pmodfun(14) - TLR4LPSen*pmodfun(15) - TLR4LPSen*pmodfun(18) - TLR4LPSen*pmodfun(19)*cbswitch
 	#MYD88
-	dy[9]= -(pmodfun(20)*MYD88*(TLR4LPSpm^pmodfun(21)))/((TLR4LPSpm^pmodfun(21))+pmodfun(22)^pmodfun(21)) + MYD88_A*pmodfun(23)
+	dy[9]= -(pmodfun(20)*MYD88*(TLR4LPSpm^pmodfun(21)))/((TLR4LPSpm^pmodfun(21))+pmodfun(22)^pmodfun(21)) + MYD88_A*pmodfun(23) - MYD88*pmodfun(50)
 	#MYD88_A
-	dy[10]= + (pmodfun(20)*MYD88*(TLR4LPSpm^pmodfun(21)))/((TLR4LPSpm^pmodfun(21))+pmodfun(22)^pmodfun(21)) - MYD88_A*pmodfun(23)
+	dy[10]= + (pmodfun(20)*MYD88*(TLR4LPSpm^pmodfun(21)))/((TLR4LPSpm^pmodfun(21))+pmodfun(22)^pmodfun(21)) - MYD88_A*pmodfun(23) + MYD88*pmodfun(50)
 	#TRIF
 	dy[11]= -TRIF*TLR4LPSen*pmodfun(24) + TRIF_A*pmodfun(25)
 	#TRIF_A
