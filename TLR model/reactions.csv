@@ -1,0 +1,49 @@
+Substrate,Products,Kinetic Law,Modifiers,Parameters,,1flux is 1reaction okay,,,,,,,note of all species in TLR4 UPSTREAM module
+CD14 LPS,CD14LPS,Mass Action Binding,,k1_konCD14LPS,,,"    % LPS binding to CD14 (capture/release), then to TLR4/MD-2 receptors (bind/unbind)",,,,,,CD14
+CD14LPS ,CD14 LPS,Mass Action Deg,,k1_koffCD14LPS,,,,,,,,,CD14LPS
+TLR4 CD14LPS,TLR4LPS,Mass Action Binding,,k1_CD14LPSassTLR4,,,,,,,,,CD14LPSen
+TLR4LPS,CD14LPS TLR4,Mass Action Deg,,k1_CD14LPSdissTLR4,,,,,,,,,LPS
+TLR4en CD14LPSen,TLR4LPSen,Mass Action Binding,,k1_CD14LPSassTLR4,,,,,,,,,TLR4
+TLR4LPSen,TLR4en CD14LPSen,Mass Action Deg,,k1_CD14LPSdissTLR4,,,,,,,,,TLR4en
+CD14LPS ,CD14LPSen,Spontaneous,,k1_CD14LPSendocytosis,,,"    % LPS binding to CD14 (capture/release), then to TLR4/MD-2 receptors (bind/unbind)",,,,,,TLR4LPS
+CD14LPSen,CD14LPS,Spontaneous,,k1_CD14LPSrecycling,,,,,,,,,TLR4LPSen
+CD14LPSen,,Mass Action Deg,,k1_LPSdeg,,,,,,,,,MYD88
+TLR4,TLR4en,Spontaneous,,k1_TLR4endocytosis,,,    % Shuttling and degradation of TLR4 (bound and unbound),,,,,,MYD88s
+TLR4en,TLR4,Spontaneous,,k1_TLR4recycling,,,,,,,,,TRIF
+TLR4en,,Mass Action Deg,,k1_TLR4deg,,,,,,,,,TRIFs
+TLR4LPS,TLR4LPSen,Spontaneous,,k1_ligandinducedTLR4LPSendocytosis,,,,,,,,,TRAF6
+TLR4LPSen,TLR4LPS,Spontaneous,,k1_TLR4LPSrecyclingslow,,,,,,,,,TRAF6s
+TLR4LPSen,,Mass Action Deg,,k1_TLR4LPSendeg,,,,,,,,,IKKK
+TLR4LPSen,,Delayed Mass Action,cbswitch,k1_delayedTLR4LPSendeg,,,##if t< k1_endosomematurationdelay: this flux = 0,,,,,,IKKK_off
+,TLR4,Constant,,k1_TLR4synth,,,,,,,,,IKK
+,CD14,Constant,,k1_CD14synth ,,,"#strange way to write the equation, in MATLAB",,,,,,IKK_off
+CD14,,Mass Action Deg,,k1_CD14deg,,,,,,,,,IKK_i
+MYD88,MYD88s,Hill Xorder Activation,TLR4LPS TLR4LPS,k1_MYD88activationbyTLR4 k2_MYD88activationHILL k3_MYD88activationEC50,,,    % Activation of MyD88 and TRIF,,,,,,TBK1
+MYD88s,MYD88,Spontaneous,,k1_MYD88deactivation,,,,,,,,,TBK1s
+TRIF,TRIFs,Linear Activation_bymod1,TLR4LPSen ,k1_TRIFactivation,,,,,,,,,IRF3
+TRIFs,TRIF,Spontaneous,,k1_TRIFinhibition,,,,,,,,,IRF3n
+TRAF6,TRAF6s,Linear Activation_bymod1,MYD88s,k1_TRAF6activationbyMYD88,,,%%IKK MODULE %%Activation of TRAF6 % ,,,,,,IRF3s
+TRAF6,TRAF6s,Linear Activation_bymod1,TRIFs,k1_TRAF6activationbyTRIF,,,,,,,,,IRF3ns
+TRAF6s,TRAF6,Spontaneous,,k1_TRAF6inhibition,,,,,,,,,
+IKKK_off,IKKK_on,Linear Activation_bymod1,TRAF6s,k1_TRAF6mediatedIKKK_offactivation,,,% IKKK,,,,,,
+IKKK_on,IKKK_off,Spontaneous,,k1_IKKKdeactivation,,,,,,,,,
+IKK_off,IKK_on,Linear Activation_bymod1,IKKK_on,k1_IKKKmediatedIKKactivation,,,% IKK,,,,,,
+IKK_on,IKK_off,Spontaneous,,k1_IKKdeactivation,,,,,,,,,
+IKK_on,IKK_off,Spontaneous,,k1_IKKinhibition,,,,,,,,,
+IKK_i,IKK_off,Spontaneous,,k1_IKKirecycledtoIKK_off,,,,"#doubts about this one, parameterfile/commonsense says IKK_off produced, however MATLAB produces IKK_i despite IKK_i in the equation already",,,,,
+TBK1,TBK1s,Linear Activation_bymod1,TRIFs,k1_TBK1activationbyTRIF,,,%%IRF3 MODULE%% %TBK activation,,,,,,
+TBK1s,TBK1,Spontaneous,,k1_TBK1deactivation,,,,,,,,,
+IRF3,IRF3s,Linear Activation_bymod1,TBK1s,k1_IRF3activationbyTBK1,,,%IRF3 activation,,,,,,
+IRF3s,IRF3,Spontaneous,,k1_IRF3deactivation,,,,,,,,,
+IRF3n,IRF3ns,Spontaneous,,k1_IRF3activationinnucleus,,,,,,,,,
+IRF3ns,IRF3n,Spontaneous,,k1_IRF3inactivationinnucleus,,,,,,,,,
+IRF3,IRF3n,Spontaneous,,k1_IRF3translocationtonucleus,,,%IRF3 shuttling,,,,,,
+IRF3n,IRF3,Spontaneous,,k1_IRF3translocationtocytoplasm,,,,,,,,,
+IRF3s,IRF3ns,Spontaneous,,k1_IRF3sintonucleus,,,,,,,,,
+IRF3ns,IRF3s,Spontaneous,,k1_IRF3nsintocytoplasm,,,,,,,,,
+,IRF3,Constant,,k1_IRF3generationrate,,,,,,,,,
+IRF3,,Mass Action Deg,,k1_IRF3deg,,,,,,,,,
+IRF3s,,Mass Action Deg,,k1_IRF3sdeg,,,,,,,,,
+IRF3ns,,Mass Action Deg,,k1_IRF3nsdeg,,,,,,,,,
+IRF3n,,Mass Action Deg,,k1_IRF3ndeg,,,,,,,,,
+MYD88,MYD88s,Spontaneous,,k1_MYD88SELFACTIVATION,,,,,,,,,
